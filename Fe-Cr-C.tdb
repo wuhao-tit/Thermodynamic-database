@@ -1,0 +1,227 @@
+$ FECRC
+$
+$ TDB-file for the thermodynamic assessment of the Fe-CR-C system
+$
+$-------------------------------------------------------------------------------
+$ 2012.5.11, amended 2021.8.3 
+$ 
+$ TDB file created by Wu
+$
+$ Nakada laboratory, Tokyo Institute of Technology
+$ 4259-J3-20, Nagatsuta-cho, 226-8503, Japan
+$ e-mail: wu.h.ai@m.titech.ac.jp
+$
+$-------------------------------------------------------------------------------
+$ PARAMETERS ARE TAKEN FROM
+$ The parameter set is taken from
+$ [1999Mie] Thermodynamic reassessment of Fe-CR-Ni system with emphasis on the 
+$ iron-rich corner, J.Miettinen, CALPHAD, 23 (1999) 231-248.
+$
+$ [1987And] Thermodynamic properties of teh CR-Fe system,
+$ J.-O.Andersson and B.Sundman, CALPHAD, 11 (1987), 83-92.
+$
+$ [1993Lee] Revision of thermodynamic descriptions of the Fe-CR and Fe-Ni 
+$ liquid phases, B.-J.Lee, CALPHAD, 17 (1993), 251-268.
+$
+$ [1992Lee] On the stability of CR-Carbides, B.-J.Lee, 
+$ CALPHAD, 16 (1992), 121-149.
+$
+$ [1990Hil] M.Hillert, C.Qiu, Metall. Trans.A, 21A (1990) 1673.
+$
+$ Unpublished works
+$ [1985Xin] Magnetic parameters in the CR-Fe system,
+$ Z.S.Xing, D.D.Gohil, A.T.Dinsdale, T.Chart, NPL, DMA (a) 103, London, 1985.
+$
+$ [chart] Magnetic parameters in the CR-Ni system are tha same as in T.Chart 
+$ unpublished work referred in several papers, e.g. M.Kajihara and M.Hillert, 
+$ Metall.Trans.A, 21A (1990) 2777-2787.
+$
+$ [1987Gus] P.Gustafson, Internal report, No.74, KTH, Sweden, Mar. 1987.
+$
+$-------------------------------------------------------------------------------
+$ COMMENTS 
+$ The sigma phase is modeld with 8-4-18 type taken from [1987And]. 
+$
+$ With the given parameters of liquid, phase equilibria can not be reproduced.
+$ We tried modifications but failed. Thus, in this TDB, the original parameters
+$ are kept for liquid. Accordingly, phase equilibria with liquid are wrong.  
+$
+$                                                                 T.A.
+$ ------------------------------------------------------------------------------
+Element /-          ELECTRON_GAS         0         0         0  !
+Element VA                VACUUM         0         0         0  !
+ELEMENT CR                BCC_A2    51.996      4050    23.560  !
+ELEMENT FE                BCC_A2    55.847      4489    27.28   !
+ELEMENT C                GRAPHITE    12.011       1054.0    5.7423 ! 
+$--------1---------2---------3---------4---------5---------6---------7---------8 
+$
+FUNCTION GLIQCR  300 +15483.015+146.059775*T-26.908*T*LN(T)
+   +.00189435*T**2-1.47721E-06*T**3+139250*T**(-1)+2.37615E-21*T**7;  2180 Y
+   -16459.984+335.616316*T-50*T*LN(T);                                6000 N !
+FUNCTION GBCCCR  300 -8856.94+157.48*T
+ -26.908*T*LN(T)+.00189435*T**2-1.47721E-06*T**3+139250*T**(-1);      2180 Y
+  -34869.344+344.18*T-50*T*LN(T)-2.885261E+32*T**(-9);                6000 N !
+FUNCTION GFCCCR  300 -1572.94+157.643*T  
+ -26.908*T*LN(T)+.00189435*T**2-1.47721E-06*T**3+139250*T**(-1);      2180 Y
+  -27585.344+344.343*T-50*T*LN(T)-2.885261E+32*T**(-9);               6000 N !
+Function GHCPCR  300  +4438+GBCCCR;                                   6000 N !
+$
+FUNCTION GBCCFE  300  +1225.7+124.134*T-23.5143*T*LN(T)
+     -.00439752*T**2-5.8927E-08*T**3+77359*T**(-1);                    1811 Y
+      -25383.581+299.31255*T-46*T*LN(T)+2.29603E+31*T**(-9);           6000 N !
+FUNCTION GFCCFE 300 -1462.4+8.282*T-1.15*T*LN(T)+6.4E-4*T**2+GBCCFE;   1811 Y
+      -1713.815+0.94001*T+4.9251E+30*T**(-9)+GBCCFE;                   6000 N !
+FUNCTION GLIQFE  300  +13265.87+117.57557*T-23.5143*T*LN(T)
+      -0.00439752*T**2-5.8927E-08*T**3+77359*T**(-1)-3.67516E-21*T**7; 1811 Y
+      -10838.83+291.302*T-46*T*LN(T);                                  6000 N !
+FUNCTION GHSERFE 300  +1224.83+124.134*T-23.5143*T*LN(T)
+     -.00439752*T**2-5.89269E-08*T**3+77358.5*T**(-1);                   1811 Y
+     -25384.451+299.31255*T-46*T*LN(T)+2.2960305E+31*T**(-9);          6000 N !
+$
+FUNCTION ZERO       300  +0;                                          6000 N !
+FUNCTION UN_ASS     300  +0;                                          6000 N !
+$$$---------------------------------------------------------------------------
+ FUNCTION GCCLIQ   300  +100000+146.1*T-24.3*T*LN(T)-0.4723E-3*T**2
+      +2562600*T**(-1)-264300000*T**(-2)+1.2E10*T**(-3);               6000 N !
+ FUNCTION GHSERCC 300  -17369+170.73*T-24.3*T*LN(T)-4.723E-04*T**2
+      +2562600*T**(-1)-2.643E+08*T**(-2)+1.2E+10*T**(-3);              6000 N !
+$$$----------------------------------------------------------------------------
+
+Function GFECEM 300 -10745+706.04*T-120.6*T*ln(T); 6000 N !
+Function GFEM23C6 300 +7.666667*GFECEM-1.666667*GHSERCC+66920-40*T; 6000 N !
+Function GCRM23C6 300 -521983+3622.24*T-620.965*T*ln(T)-0.126431*T**2; 6000 N !
+Function GCRM7C3 300 -201690+1103.128*T-190.177*T*ln(T)-0.0578207*T**2; 6000 N !
+FUNCTION GCRM3C2 300 -100823.8+530.66989*T-89.6694*T*LN(T)-0.0301188*T**2; 6000.00  N!
+FUNCTION GHSERCR 300 -8856.94+157.48*T-26.908*T*LN(T) +0.00189435*T**2-1.47721E-6*T**3+139250*T**(-1); 2180.00  Y
+      -34869.344+344.18*T-50*T*LN(T)-2.88526E+32*T**(-9); 6000.00  N!
+$
+$ ------------------------------------------------------------------------------
+TYPE_DEFINITION % SEQ * !
+DEFINE_SYSTEM_DEFAULT ELEMENT 3 !
+Default_Command DEF_SYS_ELEMENT VA !
+$
+TYPE_DEFINITION & GES A_P_D BCC_A2 MAGNETIC  -1    0.4  !
+TYPE_DEFINITION ' GES A_P_D FCC_A1 Magnetic  -3    0.28 !
+$
+$ ------------------------------------------------------------------------------
+ Phase LIQUID % 1 1 !
+ Constituent LIQUID : CR,FE,C: !
+
+ PARAMETER G(LIQUID,CR;0)     300  +GLIQCR;               6000 N !
+ Parameter G(LIQUID,FE;0)     300  +GLIQFE;               6000 N !
+ Parameter G(LIQUID,C;0)     300  +GCCLIQ;               6000 N !
+$
+ PARAMETER G(LIQUID,CR,FE;0)  300  -17737+7.996546*T;     6000 N ! 
+ PARAMETER G(LIQUID,CR,FE;1)  300  -1331;                 6000 N ! 
+$
+ Parameter G(LIQUID,C,CR;0)  300  -69245-35*T;         6000 N ! 
+ Parameter G(LIQUID,C,CR;1)  300  +83242;       6000 N !
+ PARAMETER G(LIQUID,C,CR;2)  300  +88000;       6000 N !
+$
+ Parameter G(LIQUID,C,Fe;0)  300  -124320+28.5*T;         6000 N ! 
+ Parameter G(LIQUID,C,Fe;1)  300  +19300;       6000 N !
+ PARAMETER G(LIQUID,C,Fe;2)  300  +49260-19*T;       6000 N ! 
+$
+ PARAMETER G(LIQUID,C,CR,FE;0) 300 -528500; 6000.00  N !
+ PARAMETER G(LIQUID,C,CR,FE;1) 300 +57150; 6000.00  N !
+ PARAMETER G(LIQUID,C,CR,FE;2) 300 +62630; 6000.00  N !
+$ ------------------------------------------------------------------------------
+PHASE BCC_A2  %&  2 1   3 !
+CONSTITUENT BCC_A2  : FE,CR : C,VA :  !
+$
+ PARAMETER G(BCC_A2,CR:VA;0)      300 +GBCCCR;             6000 N !
+ PARAMETER G(BCC_A2,FE:VA;0)      300 +GBCCFE;             6000 N !
+ PARAMETER G(BCC_A2,CR:C;0) 300 +GHSERCR+3*GHSERCC +416000; 6000.00  N!
+PARAMETER G(BCC_A2,FE:C;0) 300 +322050+75.667*T+GHSERFE+3*GHSERCC; 6000.00  N!
+ Parameter TC(BCC_A2,CR:VA;0)     300 -311.5;              6000 N !
+ Parameter BMAGN(BCC_A2,CR:VA;0)  300 -0.008;              6000 N !
+ Parameter BMAGN(BCC_A2,CR:C;0)  300 -0.008;              6000 N !
+ Parameter TC(BCC_A2,CR:C;0)     300 -311.5;              6000 N !
+$ 
+ PARAMETER TC(BCC_A2,CR,FE:VA;0)  300 +1650;               6000 N !
+ PARAMETER TC(BCC_A2,CR,FE:VA;1)  300 +550;                6000 N !
+ PARAMETER BMAGN(BCC_A2,CR,FE:VA;0) 300 -0.85;             6000 N !
+ PAR TC(BCC_A2,FE:VA;0)    300 +1043;                             6000 N !
+ PAR BMAGN(BCC_A2,FE:VA;0) 300 +2.22;                             6000 N !
+
+ PARAMETER TC(BCC_A2,CR,FE:C;0)  300 +1650;               6000 N ! 
+ PARAMETER TC(BCC_A2,CR,FE:C;1)  300 +550;                6000 N ! 
+ PARAMETER BMAGN(BCC_A2,CR,FE:C;0) 300 -0.85;             6000 N !
+ PAR TC(BCC_A2,FE:C;0)     300 +1043;                             6000 N !
+ PAR BMAGN(BCC_A2,FE:C;0)  300 +2.22;                             6000 N !
+$
+ PARAMETER G(BCC_A2,CR,FE:VA;0)   300 +20500-9.68*T;       6000 N ! 
+ PARAMETER G(BCC_A2,CR,FE:C;0)   300 -1320000+667.7*T;       6000 N !
+ PARAMETER G(BCC_A2,CR:C,VA;0) 300 -190*T; 6000.00  N!
+ PARAMETER G(BCC_A2,FE:C,VA;0) 300 -190*T; 6000.00  N!
+$ ------------------------------------------------------------------------------
+Phase FCC_A1 %' 2  1  1  !
+Constituent FCC_A1 :FE,CR:C,VA:!
+$
+ PARAMETER G(FCC_A1,CR:VA;0)      300  +GFCCCR;             6000 N !
+ PARAMETER G(FCC_A1,FE:VA;0)      300  +GFCCFE;             6000 N !
+ PARAMETER G(FCC_A1,CR:C;0)        300 +GHSERCR+GHSERCC+1200 -1.94*T; 6000.00  N!
+ PARAMETER G(FCC_A1,FE:C;0)         300 +77207-15.877*T+GFCCFE+GHSERCC; 6000.00  N!
+ PARAMETER G(FCC_A1,CR,FE:VA;0)  300 +10833-7.477*T;        6000 N ! 
+ PARAMETER G(FCC_A1,CR,FE:VA;1)  300 +1410;                 6000 N ! 
+ PARAMETER G(FCC_A1,CR,FE:C;0)  300 -69534+3.2353*T;        6000 N !
+ PARAMETER G(FCC_A1,FE:C,VA;0) 300 -34671; 6000.00  N!
+ PARAMETER G(FCC_A1,CR:C,VA;0) 300 -11977+6.8194*T; 6000.00  N !
+$
+ PARAMETER TC(FCC_A1,CR:VA;0)     300  -1109;               6000 N !
+ PARAMETER TC(FCC_A1,FE:VA;0)     300  -201;                6000 N !
+ PARAMETER TC(FCC_A1,FE:C;0)     300  -201;                6000 N !
+ PARAMETER BMAGN(FCC_A1,CR:VA;0)  300  -2.46;               6000 N !
+ PARAMETER BMAGN(FCC_A1,FE:VA;0)  300  -2.1;                6000 N !
+ PARAMETER BMAGN(FCC_A1,Fe:C;0)  300  -2.1;               6000 N !
+ Parameter TC(FCC_A1,CR,FE:VA;0)    300  +UN_ASS;           6000 N !
+ Parameter BMAGN(FCC_A1,CR,FE:VA;0) 300  +UN_ASS;           6000 N !
+$ -----------------------------------------------------------------------------
+PHASE M23C6 % 3  20  3  6 !
+  CONSTITUENT M23C6 : FE,CR : FE,CR:C : !
+    Parameter G(M23C6,CR:CR:C;0) 300   +GCRM23C6; 6000 N !
+    Parameter G(M23C6,Fe:Fe:C;0) 300   +GFEM23C6; 6000 N !
+    Parameter G(M23C6,Fe:CR:C;0) 300   +0.869565*GFEM23C6+0.130435*GCRM23C6; 6000 N !
+    Parameter G(M23C6,CR:Fe:C;0) 300   +0.869565*GCRM23C6+0.130435*GFEM23C6; 6000 N !
+    Parameter G(M23C6,CR,Fe:CR:C;0) 300   +6609; 6000 N !
+    Parameter G(M23C6,CR,Fe:Fe:C;0) 300   +6609; 6000 N !
+    Parameter G(M23C6,CR:CR,Fe:C;0) 300   +991; 6000 N !
+    Parameter G(M23C6,Fe:CR,Fe:C;0) 300   +991; 6000 N !
+    Parameter G(M23C6,CR,Fe:CR:C;1) 300   -43600; 6000 N !
+    Parameter G(M23C6,CR,Fe:Fe:C;1) 300   -43600; 6000 N !
+    Parameter G(M23C6,CR:CR,Fe:C;1) 300   -6540; 6000 N !
+    Parameter G(M23C6,Fe:CR,Fe:C;1) 300   -6540; 6000 N !
+
+$ ------------------------------------------------------------------------------
+Phase M7C3 % 2 7 3 !
+ Constituent M7C3 :Fe,CR:C :!
+    Parameter G(M7C3,Fe:C;0) 300   13200+2.333333*GFECEM+0.666667*GHSERCC; 6000 N !
+    Parameter G(M7C3,CR:C;0) 300   +GCRM7C3; 6000 N !
+    Parameter G(M7C3,CR,Fe:C;0) 300   +81940-61.86*T; 6000 N !
+    Parameter G(M7C3,CR,Fe:C;1) 300   -7310; 6000 N !
+    Parameter G(M7C3,CR,Fe:C;2) 300   +27050; 6000 N !
+
+$ ------------------------------------------------------------------------------
+ PHASE SIGMA % 3  8  4  18 !
+  CONSTITUENT SIGMA : FE:CR:CR,FE : !
+
+  PARAMETER G(SIGMA,FE:CR:CR;0) 300 
+              +92300 -95.96*T+8*GFCCFE+4*GBCCCR+18*GBCCCR;   6000 N ! 
+  PARAMETER G(SIGMA,FE:CR:FE;0) 300 
+              +117300-95.96*T+8*GFCCFE+4*GBCCCR+18*GBCCFE;   6000 N ! 
+$
+$ ------------------------------------------------------------------------------
+ PHASE M3C2 % 2  3 2 !
+ CONSTITUENT M3C2 : CR:C : !
+ PARAMETER G(M3C2,CR:C;0) 300 +GCRM3C2; 6000 N !
+$ ------------------------------------------------------------------------------
+$
+ PHASE GRAPHITE  %  1  1.0  !
+    CONSTITUENT GRAPHITE  :C :  !
+   PARAMETER G(GRAPHITE,C;0) 300 +GHSERCC;                              6000  N !
+$------------------------------------------------------------------------------
+ PHASE CEMENTITE  %  2   3   1 !
+    CONSTITUENT CEMENTITE  : FE,CR:C:!
+   PARAMETER G(CEMENTITE,FE:C;0) 300 +GFECEM;      6000  N !
+   PARAMETER G(CEMENTITE,CR:C;0) 300 +3*GHSERCR+GHSERCC-48000-9.28888*T; 6000  N !
+   Parameter G(CEMENTITE,FE,CR:C;0) 300 +25278-17.5*T; 6000 N !
