@@ -1,0 +1,699 @@
+	
+
+$*****************************************************************************
+$
+$ mc_x_FeCNbVN.tdb
+$
+$ Subset of MatCalc Fe database, version 1.009, created 2011-09-29
+$ This database contains thermodynamic data for system Fe-C-Nb-V-N
+$
+$ The database is aimed at being used with the MatCalc examples.
+$
+$ ############################################################################
+$
+$ Requires MatCalc version 5.44.0.008 or higher
+$
+$ ############################################################################
+$ 
+$ Copyright by Ernst Kozeschnik (ernst.kozeschnik@tuwien.ac.at)
+$
+$ Editor: Erwin Povoden-Karadeniz (erwin.povoden-karadeniz@tuwien.ac.at)
+$
+$ You are not eligible for distributing or publishing this database. 
+$
+$ ###########################################################################
+
+
+$ The following elements are included in this database:
+$
+$ Fe, C, N, Nb, V
+
+$ The following phases are included in this database:
+$   
+$ LIQUID
+$ 
+$ FCC_A1 
+$ BCC_A2 
+$
+$ GRAPHITE
+$ 
+$ Carbides 
+$ CEMENTITE    
+$   
+$ Nitrides
+$ FE4N  
+$
+$ Special phases
+$ BCC_DISL
+$
+$
+$*****************************************************************************
+$
+$ A) Definition of elements
+$ From A. T. Dinsdale, SGTE data for pure elements (REF 0)
+$
+$*****************************************************************************
+$
+$Element     Standard state   mass [g/mol]    enthalpy_298    entropy_298
+ELEMENT VA   VACUUM            0.0                0.00            0.00      !
+ELEMENT  C   HEX_A9           12.011           1054.0             5.7423    !
+ELEMENT FE   BCC_A2           55.847           4489.0            27.2797    !
+ELEMENT  N   1/2_MOLE_N2(G)   14.007           4335.0            95.751     !
+ELEMENT NB   BCC_A2           92.9064          5220.0            36.27      !
+ELEMENT  V   BCC_A2           50.9415          4507.0            30.89      !
+$
+$*****************************************************************************
+$
+$ B) MatCalc specific commands
+$
+$*****************************************************************************
+$
+$ This command allows using this database in the free version of MatCalc
+SET_EVALUATION_STRING mx36ee21351f !
+$
+$ Defines Fe as reference element
+REFERENCE_ELEMENT FE !
+$
+$ if phase FCC_A1 is selected, add composition set for carbonitrides ...
+ADD_COMPOSITION_SET FCC_A1 :TI,NB,V:C,N: !
+
+$ simple carbide/nitride phases derived from parent are defined by new MatCalc syntax (5.44.0.008) 
+$ CREATE_NEW_PHASE parent_phase_name c :El1,El2,...:El3,El4,...: new_name
+$
+$ new MatCalc syntax (5.31.1053)
+ATTACH_CONTRIBUTION BCC_DISL  BCC_A2 PARENT_PHASE !
+$
+$ ##############################################################
+$           Enthalpies of vacancy formation - FCC_A1
+$ ##############################################################
+$
+$ default is Fe
+PARAMETER HMVA(FCC_A1,*;0)
+ 273.00 +135000; 6000.00  N
+REF:151 !
+
+PARAMETER HMVA(FCC_A1,FE:*;0)
+ 273.00 +135000; 6000.00  N
+REF:151 !
+$
+$ ##############################################################
+$           Enthalpies of vacancy formation - BCC_A2
+$ ##############################################################
+$
+$ default is Fe
+PARAMETER HMVA(BCC_A2,*;0)
+ 273.00 +163000; 6000.00  N
+REF:pov10 !
+
+PARAMETER HMVA(BCC_A2,FE:*;0)
+ 273.00 +163000; 6000.00  N
+REF:pov10 !
+PARAMETER HMVA(BCC_A2,NB:*;0)
+ 273.00 +290000; 6000.00  N
+REF:pov10 !
+PARAMETER HMVA(BCC_A2,V:*;0)
+ 273.00 +204000; 6000.00  N
+REF:pov10 !
+$
+$*****************************************************************************
+$
+$ C) Gibbs energy functions of elements
+$
+$*****************************************************************************
+$
+$ ###########################################################
+$             SER (Standard elements references)
+$ ###########################################################
+$
+$ low T part of next function from REF 156
+FUNCTION GHSERCC
+ 273.00 -988.25091-7.39898691*T+1.76583*T*LN(T)-0.01706952*T**2; 350.00  Y
+ -17368.441+170.73*T-24.3*T*LN(T)
+ -4.723E-4*T**2+2562600*T**(-1)-2.643E+8*T**(-2)+1.2E+10*T**(-3); 6000.00  N
+REF:0 !
+FUNCTION GHSERFE
+ 273.00 +1225.7+124.134*T-23.5143*T*LN(T)-0.00439752*T**2
+ -5.89269E-8*T**3+77358.5*T**(-1); 1811.00  Y
+ -25383.581+299.31255*T-46*T*LN(T)+2.2960305E+31*T**(-9); 6000.00  N
+REF:0 !
+$ 1/2N2 gas
+FUNCTION GHSERNN
+ 273.00 -3750.675-9.45425*T-12.7819*T*LN(T)
+ -0.00176686*T**2+2.680735E-09*T**3-32374*T**(-1); 950.00  Y
+ -7358.85+17.2003*T-16.3699*T*LN(T)
+ -6.5107E-04*T**2+3.0097E-8*T**3+563070*T**(-1); 3350.00  Y
+ -16392.8+50.26*T-20.4695*T*LN(T)
+ +2.39754E-04*T**2-8.3331E-9*T**3+4596375*T**(-1); 6000.00  N
+REF:0 !
+FUNCTION GHSERNB
+ 273.00 -8519.353+142.045475*T-26.4711*T*LN(T)
+ +0.203475E-3*T**2-0.35011E-6*T**3+93399*T**(-1); 2750.00  Y
+ -37669.3+271.720843*T-41.77*T*LN(T)+1.52824E+32*T**(-9); 6000.00  N
+REF:0 !
+FUNCTION GHSERVV
+ 273.00 -7930.43+133.346053*T-24.134*T*LN(T)
+ -3.098E-3*T**2+1.2175E-07*T**3+69460*T**(-1); 790.00  Y
+ -7967.842+143.291093*T-25.9*T*LN(T)+0.0625E-3*T**2-0.68E-6*T**3; 2183.00  Y
+ -41689.864+321.140783*T-47.43*T*LN(T)+6.44389E+31*T**(-9); 4000.00  N
+REF:0 !
+$
+$ ###########################################################
+$           Gibbs energy functions other than SER
+$ ###########################################################
+$
+$ bcc
+FUNCTION GBBCC
+ 273.00 +35778.716+94.894864*T-15.6641*T*LN(T)-0.006864515*T**2
+ +6.18878E-7*T**3+370843*T**(-1); 1100  Y
+ +26864.526+172.584744*T-26.6047*T*LN(T)-7.9809E-4*T**2
+ -2.556E-8*T**3+1748270*T**(-1); 2348  Y
+ -6846.418+219.119244*T-31.5957527*T*LN(T)-0.00159488*T**2
+ +1.34719E-7*T**(-3)+11205883*T**(-1); 3000  N
+REF:0 !
+FUNCTION GFEFCC
+ 273.00 -1462.4+8.282*T-1.15*T*LN(T)+6.4E-04*T**2+GHSERFE#; 1811.00  Y
+ -27098.266+300.25256*T-46*T*LN(T)+2.78854E+31*T**(-9); 6000.00  N
+REF:0 !
+FUNCTION GFECEM
+ 273.00 -10195.860754+690.949887637*T-118.47637*T*LN(T)
+ -0.0007*T**2+590527*T**(-1); 6000.00  N
+REF:156 !
+FUNCTION GHEXTNB
+ 273.00 -8519.35+142.048*T-26.4711*T*LN(T)
+ +0.203475E-3*T**2-0.350119E-6*T**3+93398.8*T**(-1); 6000.00  N
+REF:19 !
+$
+FUNCTION UNDEF
+273.00 +1e-8; 6000.00  N !
+$
+$*****************************************************************************
+$*****************************************************************************
+$
+$ D) Thermodynamic model parameters for phases
+$
+$*****************************************************************************
+$*****************************************************************************
+$
+$##################################################################################
+$                   THERMODYNAMIC PARAMETERS: LIQUID
+$##################################################################################
+$
+ PHASE LIQUID % 1  1.0 > >> 6 !
+    CONSTITUENT LIQUID  : C,FE,N,NB,V :  !
+$-------------------------------------------------------------------
+        $ liquid pure elements
+$-------------------------------------------------------------------
+PARAMETER G(LIQUID,C;0)
+ 273.00 +117369-24.63*T+GHSERCC#; 6000.00  N
+REF:0 !
+PARAMETER G(LIQUID,FE;0)
+ 273.00 +12040.17-6.55843*T-3.6751551E-21*T**7+GHSERFE#; 1811.00  Y
+ -10839.7+291.302*T-46*T*LN(T); 6000.00  N
+REF:64 !
+PARAMETER G(LIQUID,N;0)
+ 273.00 +29950+59.02*T+GHSERNN#; 6000.00  N
+REF:0 !
+PARAMETER G(LIQUID,NB;0)
+ 273.00 +29781.555-10.816417*T-3.06098E-23*T**7+GHSERNB#; 2750.00  Y
+ +30169.901-10.964695*T-1.528238E+32*T**(-9)+GHSERNB#; 6000.00  N
+REF:0 !
+PARAMETER G(LIQUID,V;0)
+ 273.00 +20764.117-9.455552*T-5.19136E-22*T**7+GHSERVV#; 2183.00  Y
+ +22072.353-10.0848*T-6.4439E+31*T**(-9)+GHSERVV#; 4000.00  N
+REF:0 !
+$-------------------------------------------------------------------
+        $ liquid binary interactions
+$-------------------------------------------------------------------
+PARAMETER L(LIQUID,C,FE;0) 273.00 -124320+28.5*T; 6000.00  N
+REF:14 !
+PARAMETER L(LIQUID,C,FE;1) 273.00 +19300; 6000.00  N
+REF:14 !
+PARAMETER L(LIQUID,C,FE;2) 273.00 +49260-19*T; 6000.00  N
+REF:14 !
+PARAMETER L(LIQUID,C,N;0) 273.00 +1E-7; 6000.00  N
+REF:26 !
+$PARAMETER L(LIQUID,C,NB;0) 273.00 -292831+31.2967*T; 6000.00  N
+$REF:16 !
+$PARAMETER L(LIQUID,C,NB;1) 273.00 +6091; 6000.00  N
+$REF:16 !
+$PARAMETER L(LIQUID,C,NB;2) 273.00 +41021; 6000.00  N
+$REF:16 !
+PARAMETER L(LIQUID,C,NB;0) 273.00 -317748+35*T; 6000.00  N
+REF:pov09 !
+PARAMETER L(LIQUID,C,NB;1) 273.00 +1000; 6000.00  N
+REF:pov09 !
+PARAMETER L(LIQUID,C,NB;2) 273.00 +55982; 6000.00  N
+REF:19 !
+PARAMETER L(LIQUID,C,V;0) 273.00 -284196+38.952*T; 6000.00  N
+REF:15 !
+PARAMETER L(LIQUID,C,V;1) 273.00 +96335-17.775*T; 6000.00  N
+REF:15 !
+PARAMETER L(LIQUID,C,V;2) 273.00 +102050; 6000.00  N
+REF:15 !
+PARAMETER L(LIQUID,FE,N;0) 273.00 -19930-12.01*T; 6000.00  N
+REF:22 !
+PARAMETER L(LIQUID,FE,NB;0) 273.00 -56553+10.828*T; 6000.00  N
+REF:113 !
+PARAMETER L(LIQUID,FE,NB;1) 273.00 +13400; 6000.00  N
+REF:113 !
+PARAMETER L(LIQUID,FE,V;0) 273.00 -34679+1.895*T; 6000.00  N 
+REF:15 !
+PARAMETER L(LIQUID,FE,V;1) 273.00 +10209; 6000.00  N
+REF:15 !
+PARAMETER L(LIQUID,N,NB;0) 273.00 -292101; 6000.00  N
+REF:16 !
+PARAMETER L(LIQUID,N,NB;1) 273.00 -105406; 6000.00  N
+REF:16 !
+PARAMETER L(LIQUID,N,V;0) 273.00 -239000; 6000.00  N
+REF:48 !
+PARAMETER L(LIQUID,N,V;1) 273.00 -8380; 6000.00  N
+REF:48 !
+$PARAMETER L(LIQUID,NB,V;0) 273.00 -1875; 6000.00  N
+$REF:42 !
+PARAMETER L(LIQUID,NB,V;0) 273.00 +1e-7; 6000.00  N
+REF:92 !
+$-------------------------------------------------------------------
+        $ liquid ternary interactions
+$-------------------------------------------------------------------
+PARAMETER L(LIQUID,C,FE,N;0) 273.00 +490996-109.135*T; 6000.00  N
+REF:26 !
+PARAMETER L(LIQUID,C,FE,N;1) 273.00 +192167-109.135*T; 6000.00  N
+REF:26 !
+PARAMETER L(LIQUID,C,FE,N;2) 273.00 +490996-109.135*T; 6000.00  N
+REF:26 !
+$PARAMETER L(LIQUID,C,FE,NB;0) 273.00 +1E-7; 6000.00  N
+$REF:12 ! 
+PARAMETER L(LIQUID,C,FE,NB;0) 273.00 -40000; 6000.00  N
+REF:113 !
+PARAMETER L(LIQUID,C,FE,V;0) 273.00 -60000; 6000.00  N
+REF:15 !
+PARAMETER L(LIQUID,C,FE,V;1) 273.00 -60000; 6000.00  N
+REF:15 !
+PARAMETER L(LIQUID,C,FE,V;2) 273.00 +100000; 6000.00  N
+REF:15 !
+$PARAMETER L(LIQUID,FE,N,NB;0) 273.00 -279148+47.225*T; 6000.00  N
+$REF:12 !
+PARAMETER L(LIQUID,FE,N,NB;0) 273.00 -160000; 6000.00  N
+REF:16 !
+PARAMETER L(LIQUID,FE,N,V;0) 273.00 -228000; 6000.00  N
+REF:32 !
+PARAMETER L(LIQUID,FE,N,V;1) 273.00 +3600000; 6000.00  N
+REF:32 !
+PARAMETER L(LIQUID,FE,N,V;2) 273.00 +104000; 6000.00  N
+REF:32 !
+PARAMETER L(LIQUID,FE,NB,N;0) 273.00 -160000; 6000.00  N
+REF:16 !
+$-------------------------------------------------------------------
+        $ liquid quaternary liquid
+$-------------------------------------------------------------------
+$
+$##################################################################################
+$                   THERMODYNAMIC PARAMETERS: FCC_A1
+$##################################################################################
+$
+ TYPE_DEFINITION ' GES A_P_D FCC_A1 MAGNETIC  -3.0    0.28 !
+ PHASE FCC_A1  %'  2 1   1 > 
+Face-centered cubic Austenite phase with Va on interstitial sublattice; 
+V- and/or W-rich MC carbo-nitride phase is denoted "fcc_A1#01" in the MatCalc databases,
+with C and N on substitutional sublattice. MC carbo-nitride composition sets can be
+defined by the user (syntax see top of database). Typically MC is precipitating on dislocations and/or lath boundaries. 
+MC is an important hardening phase in many types of steel. 
+>> 6 !
+    CONSTITUENT FCC_A1  : FE%,NB,V : C,N,VA% :  !
+$-------------------------------------------------------------------
+     $ FCC_A1 endmember compounds with VA
+$-------------------------------------------------------------------
+PARAMETER G(FCC_A1,FE:VA;0) 273.00 -1462.4+8.282*T-1.15*T*LN(T)
+   +0.00064*T**2+GHSERFE#; 1811.00  Y
+   -1713.815+0.94001*T+0.4925095E+31*T**(-9)+GHSERFE#; 6000.00  N
+REF:0 !
+PARAMETER G(FCC_A1,NB:VA;0) 273.00 +13500+1.7*T+GHEXTNB#; 5000.00  N
+REF:0 !
+PARAMETER G(FCC_A1,V:VA;0) 273.00 +7500+1.7*T+GHSERVV#; 4000.00  N
+REF:0 !
+$-------------------------------------------------------------------
+     $ FCC_A1 endmember compounds with C
+$-------------------------------------------------------------------
+PARAMETER G(FCC_A1,FE:C;0) 273.00 +77207-15.877*T+GFEFCC#+GHSERCC#; 6000.00  N
+REF:11 !
+$PARAMETER G(FCC_A1,NB:C;0) 273.00 -156735+284.1689*T-46.34274*T*LN(T)
+$   -0.0029287*T**2-1.02788144E+9*T**(-3)+563374*T**(-1); 6000.00  N
+$REF:16 !
+$PARAMETER G(FCC_A1,NB:C;0) 273.00 -153054+283.912*T-46.34274*T*LN(T)
+$   -0.0029287*T**2-1.02788144E+9*T**(-3)+563374*T**(-1); 6000.00  N
+$REF:19 !
+$PARAMETER G(FCC_A1,NB:C;0) 273.00 -155600+271.98*T-44.816*T*LN(T)
+$   -0.00362*T**2+2.917E-10*T**3+449700*T**(-1); 6000.00  N
+$REF:113 ! 
+PARAMETER G(FCC_A1,NB:C;0) 273.00 -162000+283.912*T-46.34274*T*LN(T)
+   -0.0029287*T**2-1.02788144E+9*T**(-3)+563374*T**(-1); 6000.00  N
+REF:pov09 !
+PARAMETER G(FCC_A1,V:C;0) 273.00 -117302+262.57*T-41.756*T*LN(T)
+  -0.00557101*T**2+590546*T**(-1); 6000.00  N
+REF:15 !
+$-------------------------------------------------------------------
+     $ FCC_A1 endmember compounds with N
+$-------------------------------------------------------------------
+$ the following parameter is set 0 for reproduction of 
+$ published carbonitride simulation (pov)
+PARAMETER G(FCC_A1,FE:N;0) 273.00 -37460+375.42*T-37.6*T*LN(T)
+   +GHSERFE#+GHSERNN#; 6000.00  N
+REF:47 !
+PARAMETER G(FCC_A1,NB:N;0) 273.00 -227779+120.567*T-4*T*LN(T)
+   +GHSERNB#+GHSERNN#; 6000.00  N
+REF:16 !
+PARAMETER G(FCC_A1,V:N;0) 273.00 -215000+101*T-2.22*T*LN(T)
+   +0.00073*T**2+GHSERVV#+GHSERNN#; 6000.00  N
+REF:48 !
+$******************** binary interactions ***************************
+$-------------------------------------------------------------------
+       $ FCC_A1 binary interactions with VA
+$-------------------------------------------------------------------
+PARAMETER L(FCC_A1,FE,NB:VA;0) 273.00 -2000; 6000.00  N
+REF:pov09 !
+PARAMETER L(FCC_A1,FE,V:VA;0) 273.00 -15291-4.138*T; 6000.00  N
+REF:15 !
+$PARAMETER L(FCC_A1,NB,V:VA;0) 273.00 +9080; 6000.00  N
+$REF:12 !
+PARAMETER L(FCC_A1,NB,V:VA;0) 273.00 +1e-8; 6000.00  N
+REF:92 !
+$-------------------------------------------------------------------
+       $ FCC_A1 binary interactions with C
+$-------------------------------------------------------------------
+PARAMETER L(FCC_A1,FE,V:C;0) 273.00 -7645.5-2.069*T; 6000.00  N
+REF:15 !
+PARAMETER L(FCC_A1,FE,V:C;1) 273.00 -7645.5-2.069*T; 6000.00  N
+REF:15 !
+PARAMETER L(FCC_A1,NB,V:C;0) 273.00 +29000; 6000.00  N
+REF:88 !
+PARAMETER L(FCC_A1,NB,V:C;1) 273.00 -5000; 6000.00  N
+REF:88 !
+$-------------------------------------------------------------------
+       $ FCC_A1 binary interactions with N
+$-------------------------------------------------------------------   
+PARAMETER L(FCC_A1,FE,V:N;0) 273.00 -60000; 6000.00  N
+REF:32 !
+$-------------------------------------------------------------------
+       $ FCC_A1 binary interactions with C,VA
+$-------------------------------------------------------------------
+PARAMETER L(FCC_A1,FE:C,VA;0) 273.00 -34671; 6000.00  N
+REF:11 !
+$PARAMETER L(FCC_A1,NB:C,VA;0) 273.00 -94050+22.6993*T; 6000.00  N
+$REF:16 !
+$PARAMETER L(FCC_A1,NB:C,VA;0) 273.00 -95006+18.92*T; 6000.00  N
+$REF:19 !
+PARAMETER L(FCC_A1,NB:C,VA;0) 273.00 -83000+20*T; 6000.00  N
+REF:pov09 !
+$PARAMETER L(FCC_A1,NB:C,VA;2) 273.00 -65000+17.4391*T; 6000.00  N
+$REF:16 !
+PARAMETER L(FCC_A1,NB:C,VA;2) 273.00 -61342+25.207*T; 6000.00  N
+REF:19 !
+PARAMETER L(FCC_A1,V:C,VA;0) 273.00 -74811+10.201*T; 6000.00  N
+REF:15 !
+PARAMETER L(FCC_A1,V:C,VA;1) 273.00 -30394; 6000.00  N
+REF:15 !
+$
+PARAMETER L(FCC_A1,FE,NB:C,VA;0) 273.00 -40000; 6000.00  N
+REF:113 !
+PARAMETER L(FCC_A1,FE,V:C,VA;0) 273.00 -40000; 6000.00  N
+REF:15 !
+$-------------------------------------------------------------------
+       $ FCC_A1 binary interactions with N,VA
+$-------------------------------------------------------------------
+PARAMETER L(FCC_A1,FE:N,VA;0) 273.00 -26150; 6000.00  N
+REF:22 !
+PARAMETER L(FCC_A1,NB:N,VA;0) 273.00 -65218; 6000.00  N
+REF:16 !
+PARAMETER L(FCC_A1,V:N,VA;0) 273.00 -131000+47.1*T; 6000.00  N
+REF:48 !
+$
+PARAMETER L(FCC_A1,FE,V:N,VA;0) 273.00 -120000; 6000.00  N
+REF:32 !
+$-------------------------------------------------------------------
+       $ FCC_A1 binary interactions with C,N
+$-------------------------------------------------------------------
+PARAMETER L(FCC_A1,NB:C,N;0) 273.00 +12.5922*T; 6000.00  N
+REF:16 !
+PARAMETER L(FCC_A1,V:C,N;0) 273.00 -20000; 6000.00  N
+REF:88 !
+$
+PARAMETER L(FCC_A1,NB,V:C,N;0) 273.00 -114935+95*T; 6000.00  N
+REF:88 !
+$******************** ternary interactions ***************************
+$-------------------------------------------------------------------
+       $ FCC_A1 ternary interactions with VA
+$-------------------------------------------------------------------
+$-------------------------------------------------------------------
+       $ FCC_A1 ternary interactions with C
+$-------------------------------------------------------------------
+
+$-------------------------------------------------------------------
+       $ FCC_A1 ternary interactions with N
+$-------------------------------------------------------------------
+
+$-------------------------------------------------------------------
+     $ FCC_A1 ternary interactions with C,N,VA
+$-------------------------------------------------------------------
+PARAMETER L(FCC_A1,NB:C,N,VA;0) 273.00 +1E-7; 6000.00  N
+REF:16 !
+PARAMETER L(FCC_A1,NB:C,N,VA;1) 273.00 +1E-7; 6000.00  N
+REF:16 !
+PARAMETER L(FCC_A1,NB:C,N,VA;2) 273.00 -312985; 6000.00  N
+REF:16 !
+$-------------------------------------------------------------------
+     $ FCC_A1 quaternary interactions with VA
+$-------------------------------------------------------------------
+
+$-------------------------------------------------------------------
+    $ FCC_A1 magnetic contribution
+$-------------------------------------------------------------------
+PARAMETER TC(FCC_A1,FE:VA;0) 273.00 -201; 6000.00  N
+REF:22 !
+PARAMETER BMAGN(FCC_A1,FE:VA;0) 273.00 -2.1; 6000.00  N
+REF:22 !
+PARAMETER TC(FCC_A1,FE:C;0) 273.00 -201; 6000.00  N
+REF:11 !
+PARAMETER BMAGN(FCC_A1,FE:C;0) 273.00 -2.1; 6000.00  N
+REF:11 !
+$
+$##################################################################################
+                  $ THERMODYNAMIC PARAMETERS: BCC_A2  
+$##################################################################################
+$
+ TYPE_DEFINITION & GES A_P_D BCC_A2 MAGNETIC  -1.0    0.4 !
+ PHASE BCC_A2  %&  2 1   3 > 
+Body-centered cubic Ferrite phase. 
+>> 6 !
+    CONSTITUENT BCC_A2  : FE%,NB,V : C,N,VA% :  !
+$-------------------------------------------------------------------
+     $ BCC_A2 endmember compounds with VA
+$-------------------------------------------------------------------
+PARAMETER G(BCC_A2,FE:VA;0) 273.00 +GHSERFE#; 6000.00  N
+REF:0 !
+PARAMETER G(BCC_A2,NB:VA;0) 273.00 +GHSERNB#; 6000.00  N
+REF:0 !
+PARAMETER G(BCC_A2,V:VA;0) 273.00 +GHSERVV#; 4000.00  N
+REF:0 !
+$-------------------------------------------------------------------
+     $ BCC_A2 endmember compounds with C
+$-------------------------------------------------------------------
+PARAMETER G(BCC_A2,FE:C;0) 273.00 +322050+75.667*T+GHSERFE#
+   +3*GHSERCC#; 6000.00  N
+REF:11 !
+PARAMETER G(BCC_A2,NB:C;0) 273.00 +520879-70.807*T+GHSERNB#+3*GHSERCC#; 6000.00  N
+REF:19 !
+PARAMETER G(BCC_A2,V:C;0) 273.00 +108449+GHSERVV#+3*GHSERCC#; 6000.00  N
+REF:15 !
+$-------------------------------------------------------------------
+     $ BCC_A2 endmember compounds with N
+$-------------------------------------------------------------------
+PARAMETER G(BCC_A2,FE:N;0) 273.00 +93562+165.07*T+GHSERFE#+3*GHSERNN#; 6000.00  N
+REF:22 !
+PARAMETER G(BCC_A2,NB:N;0) 273.00 -207283+110.085*T+GHSERNB#+3*GHSERNN#; 6000.00  N
+REF:16 !
+PARAMETER G(BCC_A2,V:N;0) 273.00 +843000+GHSERVV#+3*GHSERNN#; 6000.00  N
+REF:48 !
+$******************** binary interactions ***************************
+$-------------------------------------------------------------------
+       $ BCC_A2 binary interactions with VA
+$-------------------------------------------------------------------
+PARAMETER L(BCC_A2,FE,NB:VA;0) 273.00 -4400+6.333*T; 6000.00  N
+REF:113 !
+PARAMETER L(BCC_A2,FE,V:VA;0) 273.00 -23674+0.465*T; 6000.00  N
+REF:15 !
+PARAMETER L(BCC_A2,FE,V:VA;1) 273.00 +8283; 6000.00  N
+REF:15 !
+$PARAMETER L(BCC_A2,NB,V:VA;0) 273.00 +9080; 6000.00  N
+$REF:42 !
+PARAMETER L(BCC_A2,NB,V:VA;0) 273.00 +1e-8; 6000.00  N
+REF:92 !
+$-------------------------------------------------------------------
+       $ BCC_A2 binary interactions with B
+$-------------------------------------------------------------------
+$
+$-------------------------------------------------------------------
+       $ BCC_A2 binary interactions with C
+$-------------------------------------------------------------------
+PARAMETER L(BCC_A2,FE,V:C;0) 273.00 -23674+0.465*T; 6000.00  N
+REF:15 !
+PARAMETER L(BCC_A2,FE,V:C;1) 273.00 +8283; 6000.00  N
+REF:15 !
+$-------------------------------------------------------------------
+       $ BCC_A2 binary interactions with N
+$-------------------------------------------------------------------
+$-------------------------------------------------------------------
+       $ BCC_A2 binary interactions with C,VA
+$-------------------------------------------------------------------
+PARAMETER L(BCC_A2,FE:C,VA;0) 273.00 -190*T; 6000.00  N
+REF:11 !
+PARAMETER L(BCC_A2,NB:C,VA;0) 273.00 -588143; 6000.00  N
+REF:19 !
+PARAMETER L(BCC_A2,V:C,VA;0) 273.00 -297868; 6000.00  N
+REF:15 !
+$-------------------------------------------------------------------
+       $ BCC_A2 binary interactions with N,VA
+$-------------------------------------------------------------------
+PARAMETER L(BCC_A2,NB:N,VA;0) 273.00 -357277+129.474*T; 6000.00  N
+REF:16 !
+PARAMETER L(BCC_A2,V:N,VA;0) 273.00 -1680000+325*T; 6000.00  N
+REF:48 !
+$-------------------------------------------------------------------
+       $ BCC_A2 binary interactions with C,N
+$-------------------------------------------------------------------
+$******************** ternary interactions ***************************
+$-------------------------------------------------------------------
+       $ BCC_A2 ternary interactions with VA
+$-------------------------------------------------------------------
+$-------------------------------------------------------------------
+       $ BCC_A2 ternary interactions with C
+$-------------------------------------------------------------------
+$
+$-------------------------------------------------------------------
+       $ BCC_A2 ternary interactions with N
+$-------------------------------------------------------------------
+$-------------------------------------------------------------------
+     $ BCC_A2 ternary interactions with C,N,VA
+$-------------------------------------------------------------------
+$
+$-------------------------------------------------------------------
+     $ BCC_A2 quaternary interactions with VA
+$-------------------------------------------------------------------
+$-------------------------------------------------------------------
+    $ BCC_A2 magnetic contribution
+$-------------------------------------------------------------------
+PARAMETER TC(BCC_A2,FE:VA;0) 273.00 +1043; 6000.00  N
+REF:0 !
+PARAMETER BMAGN(BCC_A2,FE:VA;0) 273.00 +2.22; 6000.00  N
+REF:0 !
+PARAMETER BMAGN(BCC_A2,FE,V:VA;0) 273.00 -2.26; 6000.00  N
+REF:15 !
+PARAMETER TC(BCC_A2,FE,V:VA;0) 273.00 -110; 6000.00  N
+REF:15 !
+PARAMETER TC(BCC_A2,FE,V:VA;1) 273.00 +3075; 6000.00  N
+REF:15 !
+PARAMETER TC(BCC_A2,FE,V:VA;2) 273.00 +808; 6000.00  N
+REF:15 !
+PARAMETER TC(BCC_A2,FE,V:VA;3) 273.00 -2169; 6000.00  N
+REF:15 !
+PARAMETER TC(BCC_A2,FE:C;0) 273.00 +1043; 6000.00  N
+REF:11 !
+PARAMETER BMAGN(BCC_A2,FE:C;0) 273.00 +2.22; 6000.00  N
+REF:11 !
+PARAMETER TC(BCC_A2,FE:N;0) 273.00 +1043; 6000.00  N
+REF:22 !
+PARAMETER BMAGN(BCC_A2,FE:N;0) 273.00 +2.22; 6000.00  N
+REF:22 !
+$------------------------------------------------------------------- 
+$ BCC_A2 treatment of martensite
+$-------------------------------------------------------------------
+
+PARAMETER IS(BCC_A2,*:C;0) 298.15 -757222+1515.5*T-0.7583*T**2; 1000.00 N
+REF: koze10!
+$
+
+$
+$##################################################################################
+$                   THERMODYNAMIC PARAMETERS: GRAPHITE  
+$##################################################################################
+$
+ PHASE GRAPHITE  %  1  1 > 
+Stable hexagonal Carbon phase. 
+>> 1 !
+    CONSTITUENT GRAPHITE  : C% :  !
+PARAMETER G(GRAPHITE,C;0) 273.00 +GHSERCC#; 6000.00  N
+REF:0 !
+PARAMETER G(GRAPHITE,B;0) 273.00 +10000-2*T+GHSERBB#; 6000.00  N
+REF:92 !
+PARAMETER L(GRAPHITE,B,C;0) 273.00 +34385.95+8.6792*T; 6000.00  N
+REF:92 !
+$
+
+$
+$##################################################################################
+$                   THERMODYNAMIC PARAMETERS: CEMENTITE
+$##################################################################################
+$
+ TYPE_DEFINITION M GES A_P_D CEMENTITE MAGNETIC  -3.0    0.28 !
+ PHASE CEMENTITE  %M  2 3   1 > 
+(Fe,M)C3; orthorhombic. Unit cell consists of four formula units.
+In particular Cr and Mn can dissolve into cementite
+in large quantities. W, V, Mo with limited solubilities. 
+>> 5 !
+    CONSTITUENT CEMENTITE  : FE%,NB,V : C%,N :  !
+PARAMETER G(CEMENTITE,FE:C;0) 273.00 +GFECEM#; 6000.00  N
+REF:11 !
+PARAMETER G(CEMENTITE,NB:C;0) 273.00 +3*GHSERNB#+GHSERCC#-86000; 6000.00  N
+REF:19 !
+PARAMETER G(CEMENTITE,V:C;0) 273.00 -156971+601.922*T-100.438*T*LN(T)
+   +765557*T**(-1); 6000.00  N
+REF:15 !
+PARAMETER G(CEMENTITE,FE:N;0) 273.00 -9230+99.334*T+3*GHSERFE#+0.5*GHSERNN#; 6000.00  N
+REF:26 !
+$----------------------Interaction parameters----------------------
+PARAMETER L(CEMENTITE,FE,NB:C;0) 273.00 +1E-8; 6000.00  N
+REF:12 !
+PARAMETER L(CEMENTITE,FE,V:C;0) 273.00 -45873-12.414*T; 6000.00  N
+REF:15 !
+$******************** magnetic contributions ***************************
+$
+PARAMETER TC(CEMENTITE,FE:C;0) 273.00 +485; 6000.00  N
+REF:156 !
+PARAMETER BMAGN(CEMENTITE,FE:C;0) 273.00 +1.008; 6000.00  N
+REF:156 !
+$
+
+$##################################################################################
+$                   THERMODYNAMIC PARAMETERS: FE4N
+$##################################################################################
+$
+ PHASE FE4N  %  2 4   1 > >> 0 ! 
+    CONSTITUENT FE4N  : FE% : N :  !
+PARAMETER G(FE4N,FE:N;0) 273.00 -38744+73.52*T+4*GHSERFE#+GHSERNN#; 6000.00  N
+REF:64 !
+$
+
+$##################################################################################
+$                   THERMODYNAMIC PARAMETERS:   B C C _ D I S L
+$##################################################################################
+$
+$ Implemented koze April 2010
+
+PHASE BCC_DISL  %&  2  1   3 > 
+This phase is used to model Cottrell atmosphere formation; 
+you should use it with these data only for interstitial segregation, 
+since uncontrolled behaviour if substitutional also segregate. 
+Interactions onoly defined up to a temperature of 1000°C 
+>> 2 !
+    CONSTITUENT BCC_DISL  : FE%,NB,V : C,N,VA% :  !
+$
+
+PARAMETER G(BCC_DISL,*:C,VA;1) 273.00 +500000-450*T; 1273.16  N  
+REF:test koze ! 
+PARAMETER G(BCC_DISL,*:N,VA;1) 273.00 +350000-280*T; 1273.16  N  
+REF:test koze ! 
+
+PARAMETER G(BCC_DISL,FE:C,VA;1) 273.00 +500000-450*T; 1273.16  N  
+REF:test koze ! 
+PARAMETER G(BCC_DISL,FE:N,VA;1) 273.00 +350000-280*T; 1273.16  N  
+REF:test koze ! 
+$
